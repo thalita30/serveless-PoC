@@ -1,82 +1,34 @@
-const API_GATEWAY_URL = 'DUMMY';
+alert("JS SUDAH TERHUBUNG");
 
-// 🔥 PENTING: tunggu HTML selesai load dulu
 document.addEventListener("DOMContentLoaded", function () {
 
   const form = document.querySelector("form");
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    submitFeedback();
-  });
-
-  loadFeedbacks();
-});
-
-async function submitFeedback() {
-  const name = document.getElementById('username').value.trim();
-  const feedback = document.getElementById('feedback').value.trim();
-  const fileInput = document.getElementById('file');
-  const responseDiv = document.getElementById('response');
-
-  if (!name || !feedback || fileInput.files.length === 0) {
-    responseDiv.style.color = 'red';
-    responseDiv.innerHTML = 'Please fill in all fields and choose a file.';
+  if (!form) {
+    alert("FORM TIDAK DITEMUKAN");
     return;
   }
 
-  // ✅ Dummy response (biar pasti jalan)
-  responseDiv.style.color = 'green';
-  responseDiv.innerHTML = 'Feedback submitted successfully! (Dummy)';
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  // reset form
-  document.getElementById('username').value = '';
-  document.getElementById('feedback').value = '';
-  document.getElementById('file').value = '';
-}
+    const name = document.getElementById('username').value;
+    const feedback = document.getElementById('feedback').value;
+    const file = document.getElementById('file').files[0];
+    const responseDiv = document.getElementById('response');
 
-async function loadFeedbacks() {
-  const container = document.getElementById('feedback-container');
-
-  try {
-    const data = [
-      {
-        name: "Thalita",
-        feedback: "Contoh feedback",
-        filename: "image.jpg",
-        imageUrl: ""
-      }
-    ];
-
-    if (!Array.isArray(data) || data.length === 0) {
-      container.innerHTML = 'No feedback submitted yet.';
+    if (!name || !feedback || !file) {
+      responseDiv.innerHTML = "Harap isi semua data!";
+      responseDiv.style.color = "red";
       return;
     }
 
-    const table = document.createElement('table');
-    table.innerHTML = `
-      <tr>
-        <th>Name</th>
-        <th>Feedback</th>
-        <th>Filename</th>
-        <th>Image</th>
-      </tr>
-    `;
+    // 🔥 Dummy sukses
+    responseDiv.innerHTML = "Feedback berhasil dikirim!";
+    responseDiv.style.color = "green";
 
-    data.forEach((item) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${item.name}</td>
-        <td>${item.feedback}</td>
-        <td>${item.filename}</td>
-        <td></td>
-      `;
-      table.appendChild(row);
-    });
+    // reset form
+    form.reset();
+  });
 
-    container.innerHTML = '';
-    container.appendChild(table);
-  } catch (err) {
-    container.innerHTML = 'Error: ' + err.message;
-  }
-}
+});
