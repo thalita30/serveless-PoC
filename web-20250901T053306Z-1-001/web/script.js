@@ -1,9 +1,16 @@
-const API_GATEWAY_URL = 'DUMMY'; // sementara dummy dulu
+const API_GATEWAY_URL = 'DUMMY';
 
-// 🔥 TAMBAHAN: biar tombol "Kirim" berfungsi
-document.querySelector("form").addEventListener("submit", function(e) {
-  e.preventDefault();
-  submitFeedback();
+// 🔥 PENTING: tunggu HTML selesai load dulu
+document.addEventListener("DOMContentLoaded", function () {
+
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    submitFeedback();
+  });
+
+  loadFeedbacks();
 });
 
 async function submitFeedback() {
@@ -18,7 +25,7 @@ async function submitFeedback() {
     return;
   }
 
-  // 🔥 DUMMY RESPONSE (biar keliatan jalan)
+  // ✅ Dummy response (biar pasti jalan)
   responseDiv.style.color = 'green';
   responseDiv.innerHTML = 'Feedback submitted successfully! (Dummy)';
 
@@ -32,7 +39,6 @@ async function loadFeedbacks() {
   const container = document.getElementById('feedback-container');
 
   try {
-    // 🔥 dummy data biar tabel muncul
     const data = [
       {
         name: "Thalita",
@@ -74,5 +80,3 @@ async function loadFeedbacks() {
     container.innerHTML = 'Error: ' + err.message;
   }
 }
-
-loadFeedbacks();
